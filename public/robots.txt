@@ -4,4 +4,4 @@ Allow: /
 # Disallow common assets-only paths (none here)
 
 # Sitemap
-Sitemap: https://action-renovation-alsace.vercel.app/sitemap.xml
+Sitemap: https://actionrenovationalsace.vercel.app/sitemap.xml
