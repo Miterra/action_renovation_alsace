@@ -1,18 +1,238 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr-FR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Action Rénovation Alsace - Entreprise de rénovation à Strasbourg : plâtrerie, isolation, plaquiste, aménagement intérieur et carrelage. Devis gratuit." />
-    <meta name="keywords" content="rénovation Strasbourg, plâtrerie Alsace, isolation Strasbourg, plaquiste, aménagement intérieur, carrelage Hœnheim" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <title>Action Rénovation Alsace | Rénovation & Plâtrerie à Strasbourg</title>
+    <meta name="theme-color" content="#0f2742" />
+
+    <!-- Primary Meta Tags -->
+    <title>Action Rénovation Alsace | Rénovation, Plâtrerie & Carrelage à Strasbourg</title>
+    <meta name="title" content="Action Rénovation Alsace | Rénovation, Plâtrerie & Carrelage à Strasbourg" />
+    <meta
+      name="description"
+      content="Entreprise de rénovation à Strasbourg & Hœnheim. Spécialiste plâtrerie, isolation, plaquiste, carrelage, salle de bain et aménagement intérieur. Devis gratuit sous 48h."
+    />
+    <meta
+      name="keywords"
+      content="rénovation Strasbourg, rénovation Alsace, entreprise rénovation Hœnheim, plâtrerie Strasbourg, isolation Strasbourg, plaquiste Alsace, carrelage Strasbourg, salle de bain Strasbourg, aménagement intérieur Alsace, rénovation appartement Strasbourg, rénovation maison Bas-Rhin, devis travaux Strasbourg, artisan rénovation 67"
+    />
+    <meta name="author" content="Action Rénovation Alsace" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="geo.region" content="FR-67" />
+    <meta name="geo.placename" content="Hœnheim, Strasbourg, Alsace" />
+    <meta name="geo.position" content="48.624;7.748" />
+    <meta name="ICBM" content="48.624, 7.748" />
+    <link rel="canonical" href="https://action-renovation-alsace.vercel.app/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:url" content="https://action-renovation-alsace.vercel.app/" />
+    <meta property="og:title" content="Action Rénovation Alsace | Rénovation à Strasbourg" />
+    <meta
+      property="og:description"
+      content="Spécialiste plâtrerie, isolation, carrelage et aménagement intérieur à Strasbourg. Devis gratuit en 48h."
+    />
+    <meta property="og:image" content="https://action-renovation-alsace.vercel.app/logo.png" />
+    <meta property="og:site_name" content="Action Rénovation Alsace" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://action-renovation-alsace.vercel.app/" />
+    <meta name="twitter:title" content="Action Rénovation Alsace | Rénovation à Strasbourg" />
+    <meta
+      name="twitter:description"
+      content="Spécialiste plâtrerie, isolation, carrelage et aménagement intérieur à Strasbourg. Devis gratuit."
+    />
+    <meta name="twitter:image" content="https://action-renovation-alsace.vercel.app/logo.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD: LocalBusiness (HomeAndConstructionBusiness) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HomeAndConstructionBusiness",
+        "name": "Action Rénovation Alsace",
+        "alternateName": "Action Rénovation",
+        "description": "Entreprise de rénovation globale spécialisée en plâtrerie, isolation, plaquiste, carrelage et aménagement intérieur à Strasbourg et environs.",
+        "image": "https://action-renovation-alsace.vercel.app/logo.png",
+        "logo": "https://action-renovation-alsace.vercel.app/logo.png",
+        "url": "https://action-renovation-alsace.vercel.app/",
+        "telephone": "+33662402144",
+        "email": "action.renovation67@gmail.com",
+        "priceRange": "€€",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "19 Avenue du Ried",
+          "addressLocality": "Hœnheim",
+          "postalCode": "67800",
+          "addressRegion": "Grand Est",
+          "addressCountry": "FR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 48.624,
+          "longitude": 7.748
+        },
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Strasbourg"
+          },
+          {
+            "@type": "City",
+            "name": "Hœnheim"
+          },
+          {
+            "@type": "City",
+            "name": "Schiltigheim"
+          },
+          {
+            "@type": "City",
+            "name": "Bischheim"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Bas-Rhin"
+          }
+        ],
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday"
+            ],
+            "opens": "08:00",
+            "closes": "19:00"
+          }
+        ],
+        "identifier": [
+          {
+            "@type": "PropertyValue",
+            "name": "SIREN",
+            "value": "880980800"
+          }
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Services de rénovation",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Plâtrerie et isolation",
+                "description": "Pose de cloisons, faux plafonds, isolation thermique et phonique."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Rénovation intérieure",
+                "description": "Rénovation partielle ou globale d'appartements et maisons."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Carrelage et revêtements",
+                "description": "Pose de carrelage, faïence et revêtements de sol."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Plaquiste",
+                "description": "Cloisons sèches, ossature métallique et travaux de plaquiste."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Aménagement intérieur",
+                "description": "Conception et réalisation d'aménagements sur mesure."
+              }
+            }
+          ]
+        },
+        "sameAs": []
+      }
+    </script>
+
+    <!-- JSON-LD: WebSite + SearchAction -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Action Rénovation Alsace",
+        "url": "https://action-renovation-alsace.vercel.app/",
+        "inLanguage": "fr-FR",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Action Rénovation Alsace",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://action-renovation-alsace.vercel.app/logo.png"
+          }
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <noscript>
+      <div style="max-width: 800px; margin: 2rem auto; padding: 1.5rem; font-family: system-ui, sans-serif;">
+        <h1>Action Rénovation Alsace — Rénovation à Strasbourg</h1>
+        <p>
+          <strong>Action Rénovation Alsace</strong> est une entreprise de
+          rénovation basée à Hœnheim, intervenant à Strasbourg et dans tout
+          le Bas-Rhin.
+        </p>
+        <h2>Nos services de rénovation</h2>
+        <ul>
+          <li>Plâtrerie et isolation thermique &amp; phonique</li>
+          <li>Plaquiste : cloisons, ossatures métalliques</li>
+          <li>Carrelage : sol, mur, faïence, salle de bain</li>
+          <li>Rénovation intérieure complète</li>
+          <li>Aménagement intérieur sur mesure</li>
+        </ul>
+        <h2>Nous contacter</h2>
+        <p>
+          Adresse : 19 Avenue du Ried, 67800 Hœnheim, Alsace.<br />
+          Téléphone : <a href="tel:+33662402144">06 62 40 21 44</a><br />
+          Email :
+          <a href="mailto:action.renovation67@gmail.com"
+            >action.renovation67@gmail.com</a
+          >
+        </p>
+        <p>SIREN : 880 980 800</p>
+        <p>
+          Pour accéder à l'expérience complète, veuillez activer JavaScript.
+        </p>
+      </div>
+    </noscript>
   </body>
 </html>

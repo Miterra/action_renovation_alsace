@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, HardHat, ArrowRight } from 'lucide-react'
+import { Menu, X, ArrowRight } from 'lucide-react'
 import Button from './Button'
 
 const navLinks = [
   { label: 'Accueil', href: '#accueil' },
   { label: 'Services', href: '#services' },
+  { label: 'Réalisations', href: '#realisations' },
   { label: 'Pourquoi nous', href: '#pourquoi-nous' },
   { label: 'Contact', href: '#contact' },
 ]
@@ -45,15 +46,24 @@ const Navbar = () => {
           {/* Logo */}
           <a
             href="#accueil"
-            className="flex items-center gap-2.5 group"
+            className="flex items-center gap-3 group"
             aria-label="Action Rénovation Alsace - Accueil"
           >
             <div
-              className={`p-2 rounded-lg transition-colors duration-300 ${
-                scrolled ? 'bg-navy-900' : 'bg-accent-500'
+              className={`relative transition-all duration-300 ${
+                scrolled ? 'w-11 h-11' : 'w-12 h-12'
               }`}
             >
-              <HardHat className="w-5 h-5 text-white" strokeWidth={2.5} />
+              <div
+                className={`absolute inset-0 rounded-xl transition-all duration-300 ${
+                  scrolled ? 'bg-white shadow-soft' : 'bg-white/95 shadow-lg'
+                } group-hover:scale-110`}
+              />
+              <img
+                src="/logo.png"
+                alt="Logo Action Rénovation Alsace"
+                className="relative w-full h-full object-contain p-1.5 group-hover:rotate-3 transition-transform duration-500"
+              />
             </div>
             <div className="flex flex-col leading-none">
               <span

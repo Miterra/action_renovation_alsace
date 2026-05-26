@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Original photos dir (duplicated in public/photos)
+/photos/

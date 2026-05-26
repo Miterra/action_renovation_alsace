@@ -16,22 +16,21 @@ const Hero = () => {
       id="accueil"
       className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-navy-950"
     >
+      {/* Background hero photo */}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-30 scale-105"
+        style={{
+          backgroundImage: "url('/photos/Salle_de_bain.jpg')",
+        }}
+      />
+
       {/* Background visual layers */}
       <div className="absolute inset-0 bg-hero-pattern" />
-      <div className="absolute inset-0 bg-grid-pattern opacity-50" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-30" />
 
       {/* Decorative gradients */}
       <div className="absolute top-1/4 -right-32 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 -left-32 w-96 h-96 bg-navy-500/30 rounded-full blur-3xl" />
-
-      {/* Construction photo placeholder using CSS */}
-      <div
-        className="absolute inset-0 opacity-20 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1200 800\"><defs><linearGradient id=\"g\" x1=\"0%25\" y1=\"0%25\" x2=\"100%25\" y2=\"100%25\"><stop offset=\"0%25\" stop-color=\"%23f97316\"/><stop offset=\"100%25\" stop-color=\"%230f2742\"/></linearGradient></defs><rect fill=\"url(%23g)\" width=\"1200\" height=\"800\"/></svg>')",
-        }}
-      />
 
       <div className="container-custom relative z-10">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
@@ -200,27 +199,26 @@ const Hero = () => {
                 </div>
               </motion.div>
 
-              {/* Central decorative card */}
-              <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/20 aspect-square flex items-center justify-center">
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-500/20 to-transparent rounded-3xl" />
-                <div className="relative text-center">
-                  <div className="w-28 h-28 mx-auto mb-4 bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center shadow-2xl rotate-6">
-                    <Wrench
-                      className="w-14 h-14 text-white -rotate-6"
-                      strokeWidth={2}
-                    />
-                  </div>
-                  <div className="text-white/90 text-sm font-semibold tracking-widest uppercase mb-2">
-                    Action Rénovation
-                  </div>
-                  <div className="text-white text-3xl font-extrabold">
-                    Alsace
-                  </div>
-                  <div className="mt-4 inline-flex items-center gap-1 px-3 py-1 bg-accent-500/20 border border-accent-400/30 rounded-full">
-                    <div className="w-1.5 h-1.5 bg-accent-400 rounded-full animate-pulse" />
-                    <span className="text-xs font-medium text-accent-200">
-                      Disponible 7j/7
+              {/* Central showcase photo */}
+              <div className="relative aspect-square rounded-3xl overflow-hidden border border-white/20 shadow-2xl">
+                <img
+                  src="/photos/Douche.jpg"
+                  alt="Réalisation Action Rénovation Alsace - douche italienne"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <div className="inline-flex items-center gap-1 px-3 py-1 mb-3 bg-accent-500/90 backdrop-blur-sm rounded-full">
+                    <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                    <span className="text-xs font-bold text-white">
+                      Réalisation récente
                     </span>
+                  </div>
+                  <div className="text-white text-lg font-bold">
+                    Salle de bain contemporaine
+                  </div>
+                  <div className="text-white/80 text-sm">
+                    Strasbourg · 2025
                   </div>
                 </div>
               </div>

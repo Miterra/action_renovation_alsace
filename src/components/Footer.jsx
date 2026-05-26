@@ -1,5 +1,5 @@
 import React from 'react'
-import { HardHat, MapPin, Phone, Mail, ArrowUp } from 'lucide-react'
+import { MapPin, Phone, Mail, ArrowUp } from 'lucide-react'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -20,10 +20,14 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <a
               href="#accueil"
-              className="inline-flex items-center gap-2.5 mb-5 group"
+              className="inline-flex items-center gap-3 mb-5 group"
             >
-              <div className="p-2.5 rounded-lg bg-accent-500">
-                <HardHat className="w-5 h-5 text-white" strokeWidth={2.5} />
+              <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-3 transition-transform duration-500">
+                <img
+                  src="/logo.png"
+                  alt="Logo Action Rénovation Alsace"
+                  className="w-10 h-10 object-contain"
+                />
               </div>
               <div className="flex flex-col leading-none">
                 <span className="text-lg font-extrabold tracking-tight text-white">
@@ -54,6 +58,7 @@ const Footer = () => {
               {[
                 { label: 'Accueil', href: '#accueil' },
                 { label: 'Services', href: '#services' },
+                { label: 'Réalisations', href: '#realisations' },
                 { label: 'Pourquoi nous', href: '#pourquoi-nous' },
                 { label: 'Contact', href: '#contact' },
               ].map((link) => (
@@ -96,26 +101,26 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="tel:+33388000000"
+                  href="tel:+33662402144"
                   className="flex items-center gap-3 text-sm text-white/70 hover:text-white transition-colors"
                 >
                   <Phone
                     className="w-4 h-4 flex-shrink-0 text-accent-400"
                     strokeWidth={2.2}
                   />
-                  03 88 00 00 00
+                  06 62 40 21 44
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:contact@action-renovation-alsace.fr"
+                  href="mailto:action.renovation67@gmail.com"
                   className="flex items-center gap-3 text-sm text-white/70 hover:text-white transition-colors break-all"
                 >
                   <Mail
                     className="w-4 h-4 flex-shrink-0 text-accent-400"
                     strokeWidth={2.2}
                   />
-                  contact@action-renovation-alsace.fr
+                  action.renovation67@gmail.com
                 </a>
               </li>
             </ul>

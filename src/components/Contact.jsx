@@ -9,6 +9,7 @@ import {
   MessageSquare,
   Clock,
   CheckCircle2,
+  AlertCircle,
 } from 'lucide-react'
 import Button from './Button'
 
@@ -18,6 +19,10 @@ const initialForm = {
   phone: '',
   message: '',
 }
+
+// formsubmit.co endpoint — la première soumission déclenche un mail
+// de validation à confirmer sur action.renovation67@gmail.com.
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/action.renovation67@gmail.com'
 
 const contactInfo = [
   {
@@ -30,47 +35,62 @@ const contactInfo = [
   {
     icon: Phone,
     label: 'Téléphone',
-    value: '03 88 00 00 00',
+    value: '06 62 40 21 44',
     subValue: 'Lun. - Sam. : 8h - 19h',
-    href: 'tel:+33388000000',
+    href: 'tel:+33662402144',
   },
   {
     icon: Mail,
     label: 'Email',
-    value: 'contact@action-renovation-alsace.fr',
+    value: 'action.renovation67@gmail.com',
     subValue: 'Réponse sous 24h',
-    href: 'mailto:contact@action-renovation-alsace.fr',
+    href: 'mailto:action.renovation67@gmail.com',
   },
 ]
 
 const Contact = () => {
   const [form, setForm] = useState(initialForm)
-  const [submitted, setSubmitted] = useState(false)
-  const [submitting, setSubmitting] = useState(false)
+  const [status, setStatus] = useState('idle') // idle | submitting | success | error
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitting(true)
+    setStatus('submitting')
 
-    // Simulate API call
-    console.log('[Action Rénovation Alsace] Demande de devis reçue :', form)
+    try {
+      const response = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          message: form.message,
+          _subject: `Nouvelle demande de devis — ${form.name}`,
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      })
 
-    setTimeout(() => {
-      setSubmitting(false)
-      setSubmitted(true)
-      alert(
-        `Merci ${form.name} ! Votre demande de devis a bien été enregistrée. Nous vous recontactons sous 24h.`,
-      )
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
 
-      setTimeout(() => {
-        setForm(initialForm)
-        setSubmitted(false)
-      }, 4000)
-    }, 800)
+      setStatus('success')
+      setForm(initialForm)
+
+      setTimeout(() => setStatus('idle'), 6000)
+    } catch (error) {
+      console.error('[Action Rénovation Alsace] Erreur envoi :', error)
+      setStatus('error')
+      setTimeout(() => setStatus('idle'), 6000)
+    }
   }
 
   return (
@@ -78,12 +98,10 @@ const Contact = () => {
       id="contact"
       className="section-padding bg-gradient-to-b from-navy-50/50 to-white relative overflow-hidden"
     >
-      {/* Decorative elements */}
       <div className="absolute top-20 right-0 w-72 h-72 bg-accent-100 rounded-full blur-3xl opacity-40" />
       <div className="absolute bottom-20 left-0 w-72 h-72 bg-navy-100 rounded-full blur-3xl opacity-50" />
 
       <div className="container-custom relative z-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -191,16 +209,76 @@ const Contact = () => {
                 variant="primary"
                 size="lg"
                 fullWidth
-                icon={submitted ? CheckCircle2 : Send}
-                disabled={submitting || submitted}
-                className={submitting ? 'opacity-70 cursor-wait' : ''}
+                icon={
+                  status === 'success'
+                    ? CheckCircle2
+                    : status === 'error'
+                    ? AlertCircle
+                    : Send
+                }
+                disabled={status === 'submitting' || status === 'success'}
+                className={status === 'submitting' ? 'opacity-70 cursor-wait' : ''}
               >
-                {submitted
+                {status === 'success'
                   ? 'Demande envoyée !'
-                  : submitting
+                  : status === 'submitting'
                   ? 'Envoi en cours...'
+                  : status === 'error'
+                  ? 'Erreur, réessayer'
                   : 'Envoyer ma demande'}
               </Button>
+
+              {/* Status message */}
+              {status === 'success' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg flex items-start gap-3"
+                  role="status"
+                >
+                  <CheckCircle2
+                    className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5"
+                    strokeWidth={2.2}
+                  />
+                  <div className="text-sm">
+                    <p className="font-semibold text-green-900">
+                      Merci pour votre demande !
+                    </p>
+                    <p className="text-green-700">
+                      Nous vous recontactons sous 24h ouvrées.
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+
+              {status === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3"
+                  role="alert"
+                >
+                  <AlertCircle
+                    className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"
+                    strokeWidth={2.2}
+                  />
+                  <div className="text-sm">
+                    <p className="font-semibold text-red-900">
+                      Une erreur est survenue.
+                    </p>
+                    <p className="text-red-700">
+                      Contactez-nous directement au{' '}
+                      <a
+                        href="tel:+33662402144"
+                        className="font-bold underline"
+                      >
+                        06 62 40 21 44
+                      </a>
+                      .
+                    </p>
+                  </div>
+                </motion.div>
+              )}
 
               <p className="text-xs text-navy-500 text-center mt-4">
                 En soumettant ce formulaire, vous acceptez d'être recontacté
@@ -265,20 +343,28 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Availability card */}
-            <div className="bg-gradient-to-br from-accent-500 to-accent-600 rounded-3xl p-8 text-white shadow-cta">
+            {/* Quick call card */}
+            <a
+              href="tel:+33662402144"
+              className="block bg-gradient-to-br from-accent-500 to-accent-600 rounded-3xl p-8 text-white shadow-cta hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group"
+            >
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-                  <Clock className="w-5 h-5 text-white" strokeWidth={2.2} />
+                <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Phone className="w-5 h-5 text-white" strokeWidth={2.2} />
                 </div>
-                <h4 className="text-lg font-bold">Réactivité garantie</h4>
+                <h4 className="text-lg font-bold">Appel direct</h4>
               </div>
-              <p className="text-white/95 text-sm leading-relaxed">
-                Nous répondons à toutes les demandes sous{' '}
-                <strong className="font-bold">24h ouvrées</strong>. Pour les
-                urgences, n'hésitez pas à nous appeler directement.
+              <p className="text-white/95 text-sm leading-relaxed mb-3">
+                Pour les urgences ou demandes rapides :
               </p>
-            </div>
+              <div className="text-2xl font-extrabold tracking-tight">
+                06 62 40 21 44
+              </div>
+              <div className="flex items-center gap-2 mt-3 text-xs text-white/80">
+                <Clock className="w-3.5 h-3.5" strokeWidth={2.5} />
+                Lun. - Sam. : 8h - 19h
+              </div>
+            </a>
           </motion.aside>
         </div>
       </div>
