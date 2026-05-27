@@ -36,7 +36,7 @@ const contactInfo = [
     icon: Phone,
     label: 'Téléphone',
     value: '06 62 40 21 44',
-    subValue: 'Lun. - Sam. : 8h - 19h',
+    subValue: 'Lun. - Sam. : 8h - 17h',
     href: 'tel:+33662402144',
   },
   {
@@ -362,7 +362,7 @@ const Contact = () => {
               </div>
               <div className="flex items-center gap-2 mt-3 text-xs text-white/80">
                 <Clock className="w-3.5 h-3.5" strokeWidth={2.5} />
-                Lun. - Sam. : 8h - 19h
+                Lun. - Sam. : 8h - 17h
               </div>
             </a>
           </motion.aside>

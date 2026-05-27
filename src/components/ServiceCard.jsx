@@ -1,6 +1,5 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
 
 const ServiceCard = ({ icon: Icon, title, description, features, index = 0 }) => {
   return (
@@ -35,7 +34,7 @@ const ServiceCard = ({ icon: Icon, title, description, features, index = 0 }) =>
 
       {/* Features list */}
       {features && features.length > 0 && (
-        <ul className="space-y-2 mb-5">
+        <ul className="space-y-2">
           {features.map((feature) => (
             <li
               key={feature}
@@ -47,19 +46,6 @@ const ServiceCard = ({ icon: Icon, title, description, features, index = 0 }) =>
           ))}
         </ul>
       )}
-
-      {/* Footer arrow */}
-      <div className="pt-4 border-t border-navy-100 flex items-center justify-between">
-        <span className="text-sm font-semibold text-navy-900">
-          En savoir plus
-        </span>
-        <div className="w-8 h-8 rounded-full bg-navy-50 group-hover:bg-accent-500 flex items-center justify-center transition-all duration-300 group-hover:rotate-45">
-          <ArrowUpRight
-            className="w-4 h-4 text-navy-900 group-hover:text-white transition-colors"
-            strokeWidth={2.5}
-          />
-        </div>
-      </div>
     </motion.article>
   )
 }
