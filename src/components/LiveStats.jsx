@@ -1,12 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Users, Eye } from 'lucide-react'
-
-// --- Compteur de visites via une API JSON gratuite (Abacus) ---
-// Aucun compte, aucune clé : /hit incrémente et renvoie { "value": N },
-// /get lit la valeur sans incrémenter.
-const COUNTER_NS = 'action-renovation-alsace'
-const COUNTER_KEY = 'visites-total'
-const ABACUS_HIT = `https://abacus.jasoncameron.dev/hit/${COUNTER_NS}/${COUNTER_KEY}`
+import {
+  ref,
+  onValue,
+  onDisconnect,
+  push,
+  set,
+  remove,
+  runTransaction,
+  serverTimestamp,
+} from 'firebase/database'
+import { db } from '../lib/firebase'
 
 // Petit hook : fait monter un nombre vers sa cible avec une animation fluide.
 const useCountUp = (target, duration = 1400) => {
@@ -37,52 +41,61 @@ const useCountUp = (target, duration = 1400) => {
   return value
 }
 
-// Estimation "en ligne" réaliste : plus de visiteurs en journée, moins la nuit.
-// (Un vrai temps réel nécessiterait un backend websocket — non dispo ici.)
-const estimateOnline = () => {
-  const h = new Date().getHours()
-  const base = h >= 9 && h <= 21 ? 3 : h >= 7 && h < 9 ? 2 : 1
-  return base + Math.floor(Math.random() * 3) // base .. base+2
-}
-
 const LiveStats = () => {
   const [online, setOnline] = useState(null)
   const [totalVisits, setTotalVisits] = useState(null)
 
-  // Compteur de visites total : +1 à chaque chargement / refresh de la page.
+  // --- Compteur de visites total : +1 à chaque chargement de page ---
   useEffect(() => {
-    const controller = new AbortController()
+    const totalRef = ref(db, 'stats/totalVisits')
 
-    const loadCounter = async () => {
-      try {
-        const res = await fetch(ABACUS_HIT, { signal: controller.signal })
-        if (!res.ok) throw new Error(`compteur HTTP ${res.status}`)
-        const data = await res.json()
-        if (typeof data.value === 'number') {
-          setTotalVisits(data.value)
-        }
-      } catch (e) {
-        if (e.name !== 'AbortError') {
-          console.error('[LiveStats] compteur visites :', e)
-        }
-      }
-    }
+    // Incrémentation atomique (transaction) à chaque chargement.
+    runTransaction(totalRef, (current) => (current || 0) + 1).catch((e) =>
+      console.error('[LiveStats] incrément visites :', e)
+    )
 
-    loadCounter()
-    return () => controller.abort()
+    // Écoute en temps réel : le total se met à jour même si d'autres
+    // visiteurs arrivent pendant qu'on est sur la page.
+    const unsub = onValue(
+      totalRef,
+      (snap) => {
+        const v = snap.val()
+        if (typeof v === 'number') setTotalVisits(v)
+      },
+      (e) => console.error('[LiveStats] lecture visites :', e)
+    )
+
+    return () => unsub()
   }, [])
 
-  // Estimation "en ligne" qui évolue doucement (petite marche aléatoire)
+  // --- Présence temps réel : nombre de visiteurs connectés à l'instant T ---
   useEffect(() => {
-    setOnline(estimateOnline())
-    const id = setInterval(() => {
-      setOnline((prev) => {
-        const delta = Math.random() < 0.5 ? -1 : 1
-        const next = (prev ?? estimateOnline()) + delta
-        return Math.min(8, Math.max(1, next))
-      })
-    }, 11000)
-    return () => clearInterval(id)
+    const onlineRef = ref(db, 'online')
+    const connectedRef = ref(db, '.info/connected')
+    let myRef = null
+
+    // Quand la connexion Firebase est établie, on s'inscrit dans /online
+    // et on programme la suppression automatique à la déconnexion.
+    const unsubConnected = onValue(connectedRef, (snap) => {
+      if (snap.val() === true) {
+        myRef = push(onlineRef)
+        onDisconnect(myRef).remove()
+        set(myRef, { ts: serverTimestamp() })
+      }
+    })
+
+    // On compte le nombre de visiteurs présents en temps réel.
+    const unsubOnline = onValue(
+      onlineRef,
+      (snap) => setOnline(snap.size),
+      (e) => console.error('[LiveStats] présence :', e)
+    )
+
+    return () => {
+      unsubConnected()
+      unsubOnline()
+      if (myRef) remove(myRef)
+    }
   }, [])
 
   const onlineDisplay = useCountUp(online ?? 1)

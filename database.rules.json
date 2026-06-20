@@ -1,0 +1,17 @@
+{
+  "rules": {
+    "online": {
+      ".read": true,
+      "$conn": {
+        ".write": true,
+        ".validate": "!newData.exists() || newData.hasChildren(['ts'])"
+      }
+    },
+    "stats": {
+      "totalVisits": {
+        ".read": true,
+        ".write": "newData.isNumber() && (!data.exists() || newData.val() === data.val() + 1)"
+      }
+    }
+  }
+}
