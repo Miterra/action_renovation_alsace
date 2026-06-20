@@ -1,5 +1,6 @@
 import React from 'react'
 import { MapPin, Phone, Mail, ArrowUp } from 'lucide-react'
+import LiveStats from './LiveStats'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -126,6 +127,9 @@ const Footer = () => {
             </ul>
           </div>
         </div>
+
+        {/* Compteurs temps réel */}
+        <LiveStats />
 
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
